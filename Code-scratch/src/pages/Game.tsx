@@ -1,14 +1,20 @@
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 import { Start } from '../scenes/Start';
 import getUser from '../api/getUser';
+import { UserContext } from '../context/UserContext';
 
 const Game = () => {
   const gameRef = useRef<HTMLDivElement>(null);
+  const { user } = useContext(UserContext);
+
 
   const fetchUser = async() => {
     const userData = await getUser();
     console.log("mensaje desde game.tsx" + "" + userData);
+
+    console.log("desde juego" + "" + "" + user.email);
+    
     
 
   };

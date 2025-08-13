@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import {auth, provider} from "../fireBaseConfig/config"
 import {signInWithPopup} from "firebase/auth"
 import { useNavigate } from "react-router-dom";
 import type { UserLogin } from "../model/UserLogin";
 import LogUser from "../api/LogUser";
+import { UserContext } from "../context/UserContext";
 
 export const Login = () => {
     const [score, setScore] = useState<number>(0);
+    const {user, setUser} = useContext(UserContext);
     const navigate = useNavigate();
 
     const handlerButtonGoogle = async () => {
@@ -23,6 +25,8 @@ export const Login = () => {
 
             const logUser = await LogUser(usuario);
 
+            setUser(logUser);
+            navigate('/');
 
             setScore(logUser.score);
 

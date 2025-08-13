@@ -1,14 +1,21 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 
 export const Home = () => {
     const navigate = useNavigate();
+    const { user } = useContext(UserContext);
 
     const handlerButtonLogin = () => {
         navigate('/login');
     };
     const handlerButtonLogout = () =>{
-        localStorage.clear();
+        
+    };
+
+    const handlerButtonPlay = () =>{
+        navigate('/game');
     };
 
     return (
@@ -24,6 +31,11 @@ export const Home = () => {
                             <button type="button" className="btn btn-primary btn-lg" onClick={handlerButtonLogout}>
                                 Logout
                             </button>
+                            <button type="button" className="btn btn-primary btn-lg" onClick={handlerButtonPlay}>
+                                Play
+                            </button>
+                            <div > <h2> SCORE</h2> <h1> {user.score} </h1>
+            </div> 
                         </div>
                     </div>      
                 </div>  
