@@ -1,8 +1,9 @@
 import { useContext, useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 import { Start } from '../scenes/Start';
-import getUser from '../api/getUser';
 import { UserContext } from '../context/UserContext';
+import getUser from '../api/GetUser';
+import { Lobby } from '../scenes/Lobby';
 
 const Game = () => {
   const gameRef = useRef<HTMLDivElement>(null);
@@ -27,7 +28,10 @@ const Game = () => {
       height: 720,
       backgroundColor: '#000000',
       parent: gameRef.current!,
-      scene: [Start],
+      scene: [
+        Lobby,
+        Start
+      ],
       scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,

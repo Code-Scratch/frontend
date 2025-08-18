@@ -32,8 +32,6 @@ export const Home = () => {
                                 Jugar
                             </button> }
                             
-                            <div > <h2> SCORE</h2> <h1> {user.score} </h1>
-            </div> 
                         </div>
                     </div>      
                 </div>  

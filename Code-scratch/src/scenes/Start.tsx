@@ -8,9 +8,7 @@ export class Start extends Phaser.Scene {
     }
 
     preload(): void {
-        this.load.image('background', 'assets/space.png');
-        this.load.image('logo', 'assets/phaser.png');
-        this.load.spritesheet('ship', 'assets/spaceship.png', { frameWidth: 176, frameHeight: 96 });
+        
     }
 
     create(): void{
