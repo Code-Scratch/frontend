@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from "react"
-import {auth, provider} from "../fireBaseConfig/config"
+import { useContext, useEffect } from "react"
 import {signInWithPopup} from "firebase/auth"
 import { useNavigate } from "react-router-dom";
 import type { UserLogin } from "../model/UserLogin";
 import LogUser from "../api/LogUser";
 import { UserContext } from "../context/UserContext";
+import { auth, provider } from "../fireBaseConfig/Config";
+import { FcGoogle } from "react-icons/fc";
 
 export const Login = () => {
-    const [score, setScore] = useState<number>(0);
-    const {user, setUser} = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handlerButtonGoogle = async () => {
@@ -28,7 +28,6 @@ export const Login = () => {
             setUser(logUser);
             navigate('/');
 
-            setScore(logUser.score);
 
             console.log(logUser);
     
@@ -45,14 +44,14 @@ export const Login = () => {
     }, [])
 
     return (
-        <div>
-            {score?
-            /*navigate("/")*/ <div > <h2> SCORE</h2> <h1> {score} </h1>
-            </div> 
-            : <button onClick={handlerButtonGoogle}>
-                Inicia Sesion con Google
-                </button> }
-        </div>
-    );
+            <div className="d-flex justify-content-center align-items-center vh-100">
+                <div className="text-center">
+                     <FcGoogle size={32} style={{ marginRight: "8px" }} />
+                        <button type="button"className="btn btn-primary btn-lg" onClick={handlerButtonGoogle}>
+                        Inicia Sesión con Google
+                        </button>
+                </div>
+            </div>
+        );
 
 };

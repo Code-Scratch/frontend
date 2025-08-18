@@ -10,9 +10,7 @@ export const Home = () => {
     const handlerButtonLogin = () => {
         navigate('/login');
     };
-    const handlerButtonLogout = () =>{
-        
-    };
+
 
     const handlerButtonPlay = () =>{
         navigate('/game');
@@ -23,17 +21,17 @@ export const Home = () => {
                 <div className="d-flex gap-4">
                     <div className="card" style={{ width: '19rem' }}>
                         <div className="card-body">
-                            <h5 className="card-title">Logueate</h5>
+                            <h5 className="card-title">Home</h5>
                             <p className="card-text">Bienvenido a Code-Scratch! Logueate para continuar</p>
                             <button type="button" className="btn btn-primary btn-lg" onClick={handlerButtonLogin}>
                                 Loguearme
                             </button>
-                            <button type="button" className="btn btn-primary btn-lg" onClick={handlerButtonLogout}>
-                                Logout
-                            </button>
-                            <button type="button" className="btn btn-primary btn-lg" onClick={handlerButtonPlay}>
-                                Play
-                            </button>
+                            {user.email !=='' ? <button type="button" class="btn btn-success" onClick={handlerButtonPlay}>
+                                Jugar
+                            </button> : <button type="button" class="btn btn-success" disabled>
+                                Jugar
+                            </button> }
+                            
                             <div > <h2> SCORE</h2> <h1> {user.score} </h1>
             </div> 
                         </div>

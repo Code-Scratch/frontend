@@ -1,4 +1,5 @@
-import type { User } from "../model/user";
+import type { User } from "../model/User";
+
 
 export type UserContextValue = {
     user:User,
