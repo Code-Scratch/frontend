@@ -4,33 +4,29 @@ import { Start } from '../scenes/Start';
 import { UserContext } from '../context/UserContext';
 import getUser from '../api/GetUser';
 import { Lobby } from '../scenes/Lobby';
+import { GameScene } from '../scenes/GameScene';
 
 const Game = () => {
   const gameRef = useRef<HTMLDivElement>(null);
   const { user } = useContext(UserContext);
 
 
-  const fetchUser = async() => {
-    const userData = await getUser();
-    console.log("mensaje desde game.tsx" + "" + userData);
-
-    console.log("desde juego" + "" + "" + user.email);
-    
-    
-
-  };
-
   useEffect(() => {
-    fetchUser();
     const config: Phaser.Types.Core.GameConfig = {
       type: Phaser.AUTO,
       width: 1280,
       height: 720,
       backgroundColor: '#000000',
       parent: gameRef.current!,
+      physics: {
+        default: 'matter',
+        matter: {
+          
+        }
+      },
       scene: [
         Lobby,
-        Start
+        GameScene
       ],
       scale: {
         mode: Phaser.Scale.FIT,
@@ -39,11 +35,12 @@ const Game = () => {
     };
 
     const game = new Phaser.Game(config);
+    game.scene.start("Lobby", { score: user?.score || 0 });
 
     return () => {
       game.destroy(true); 
     };
-  }, []);
+  }, [user]);
 
   return <div ref={gameRef} style={{ width: '100%', height: '100vh' }} />;
 };

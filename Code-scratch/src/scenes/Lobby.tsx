@@ -2,8 +2,14 @@ import Phaser from "phaser";
 
 export class Lobby extends Phaser.Scene {
 
+    private score: number = 0;
+
     constructor(){
         super('Lobby');
+    }
+
+    init(data: { score: number }): void {
+        this.score = data.score;
     }
 
 
@@ -31,7 +37,7 @@ export class Lobby extends Phaser.Scene {
         this.input.once('pointerdown', () => {
             this.cameras.main.fadeOut(500);
             this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-                this.scene.start('Start');  
+                this.scene.start('GameScene', {score: this.score});  
             })
         })
 
@@ -40,7 +46,6 @@ export class Lobby extends Phaser.Scene {
     }
 
     update(): void {
-        //this.add.image(0,0,'background').setOrigin(0,0)
         
     }
 

@@ -1,4 +1,3 @@
-import Phaser from "phaser";
 
 export class Start extends Phaser.Scene {
      private background!: Phaser.GameObjects.TileSprite;
