@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef } from 'react';
 import Phaser from 'phaser';
-import { Start } from '../scenes/Start';
 import { UserContext } from '../context/UserContext';
 import getUser from '../api/GetUser';
 import { Lobby } from '../scenes/Lobby';
@@ -9,6 +8,8 @@ import { GameScene } from '../scenes/GameScene';
 const Game = () => {
   const gameRef = useRef<HTMLDivElement>(null);
   const { user } = useContext(UserContext);
+  console.log(user.score + "desde Game.tsx");
+  
 
 
   useEffect(() => {

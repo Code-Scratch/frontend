@@ -4,7 +4,7 @@ export class GameScene extends Phaser.Scene {
 
     private pb: number = 0; // puntos maximos del jugador
     private points: number = 0; // puntos actuales del jugador
-    private hp: number = 200;   // vida del enemigo
+    private hp: number = 2000;   // vida del enemigo
 
     private grid: number[][] = []; // matriz del tablero
     private rows: number = 8;   // cantidad de filas
@@ -28,8 +28,12 @@ export class GameScene extends Phaser.Scene {
     }
 
     init(data: { score: number }) {
-        this.score = data.score;
+        this.pb = data.score;
+        console.log(data.score + "desde GameScene.tsx");
+        
         this.points = 0;
+
+    
     }
 
     preload() : void {
@@ -41,10 +45,15 @@ export class GameScene extends Phaser.Scene {
 
         this.load.image('rexona', 'assets/desodorante.png')
 
-        this.load.spritesheet('gato', 'assets/enemigoCat.png',{
-          frameWidth: 71,
-          frameHeight: 73
+        this.load.spritesheet('enemigoCat', 'assets/enemigoCat.png', {
+          frameWidth: 70,
+          frameHeight: 69
         });
+
+        this.load.video('enemigoVideo', 'assets/cat-spinning.mp4');
+
+        this.load.audio('bgMusic', 'assets/funkytown.mp3')
+
     }
 
     create() : void {
@@ -76,45 +85,53 @@ export class GameScene extends Phaser.Scene {
         });
 
         this.pointsText = this.add.text(scorePrefix.x + scorePrefix.width, 40 , `${this.points}`, {
-            fontSize: '25px',
-            color: '#433D8C',
-            stroke: '#ffffff',
-            strokeThickness: 6
+          fontSize: '25px',
+          color: '#433D8C',
+          stroke: '#ffffff',
+          strokeThickness: 6
         })
 
 
         //display para el enemigo
-        
-        this.add.image(320, 350, 'rexona').setDisplaySize(128,256);
-
-        const hpPrefix = this.add.text(270, 500, 'HP:', {
-            fontSize: '25px',
-            color: '#433D8C',
-            stroke: '#ffffff',
-            strokeThickness: 6
+      /*
+      this.add.image(320, 350, 'rexona').setDisplaySize(128,256);
+        */
+      const hpPrefix = this.add.text(270, 500, 'HP:', {
+          fontSize: '25px',
+          color: '#433D8C',
+          stroke: '#ffffff',
+          strokeThickness: 6
         });
+
+      this.hpText = this.add.text(hpPrefix.x + hpPrefix.width, 500 , `${this.hp}`, {
+        fontSize: '25px',
+        color: '#433D8C',
+        stroke: '#ffffff',
+        strokeThickness: 6
+      });
         
-        /*
+      /*
       this.anims.create({
-        key: 'cat_idle',
-        frames: this.anims.generateFrameNumbers('gato', { start: 0, end: 139 }), 
-        frameRate: 7, // velocidad (frames por segundo)
+        key: 'enemigo_idle',
+        frames: this.anims.generateFrameNumbers('enemigoCat', { start: 0, end: 144 }),
+        frameRate: 12, // velocidad de animación (frames por segundo)
         repeat: -1     // -1 = loop infinito
       });
 
-      const enemy = this.add.sprite(320, 350, 'cat').setScale(3);
-      enemy.play('cat_idle');
-*/
-        this.hpText = this.add.text(hpPrefix.x + hpPrefix.width, 500 , `${this.hp}`, {
-            fontSize: '25px',
-            color: '#433D8C',
-            stroke: '#ffffff',
-            strokeThickness: 6
-        })
+      let enemy = this.add.sprite(320, 350, 'enemigoCat').setScale(2);
+      enemy.play('enemigo_idle');
+      */
+
+      const video = this.add.video(320, 350, 'enemigoVideo');
+
+      video.setDisplaySize(320,350);
+      video.play(true);
+
+
         
 
-        //crear el tablero
-        const graphics = this.add.graphics();
+      //crear el tablero
+      const graphics = this.add.graphics();
         graphics.lineStyle(4, 0xffffff, 1);
         graphics.strokeRect(
         this.boardOffsetX,
@@ -137,6 +154,13 @@ export class GameScene extends Phaser.Scene {
         */
 
         // prueba de agarre de gema
+
+      //Backgroud music
+
+      this.sound.play('bgMusic', {
+        loop: true,
+        volume: 0.2
+      })
         
     
        
@@ -284,7 +308,7 @@ export class GameScene extends Phaser.Scene {
 
   }
 
-    private findMatches(): boolean {
+  private findMatches(): boolean {
     let found = false;
 
     // Inicializar matched con la misma dimensión que grid
@@ -309,6 +333,8 @@ export class GameScene extends Phaser.Scene {
                 this.matched[row][col + 2] = true;
                 this.points += 10;
                 this.pointsText.setText(this.points.toString(10));
+                this.hp -= 2;
+                this.hpText.setText(`${this.hp}`);
                 found = true;
             }
         }
@@ -327,6 +353,8 @@ export class GameScene extends Phaser.Scene {
                 this.matched[row + 2][col] = true;
                 this.points += 10;
                 this.pointsText.setText(this.points.toString(10));
+                this.hp -= 2;
+                this.hpText.setText(`${this.hp}`);
                 found = true;
             }
         }
