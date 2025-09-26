@@ -1,4 +1,4 @@
-import { userApi } from "./apiBase/userApi"
+import { userApi } from "./apiBase/UserApi"
 
 
 const user = async () => {
