@@ -110,17 +110,6 @@ export class GameScene extends Phaser.Scene {
         strokeThickness: 6
       });
         
-      /*
-      this.anims.create({
-        key: 'enemigo_idle',
-        frames: this.anims.generateFrameNumbers('enemigoCat', { start: 0, end: 144 }),
-        frameRate: 12, // velocidad de animación (frames por segundo)
-        repeat: -1     // -1 = loop infinito
-      });
-
-      let enemy = this.add.sprite(320, 350, 'enemigoCat').setScale(2);
-      enemy.play('enemigo_idle');
-      */
 
       const video = this.add.video(320, 350, 'enemigoVideo');
 
@@ -143,19 +132,8 @@ export class GameScene extends Phaser.Scene {
         this.createBoard();
 
 
-        //prueba fisicas 
-        /*
-        this.matter.add.image(400, -100, 'diamanteRojo');
-        this.matter.add.image(360, -600, 'diamanteVerde');
-        this.matter.add.image(420, -900, 'diamanteAzul');
-
-        this.matter.add.image(750,170, graphics, null, { isStatic: true } )
-
-        */
-
-        // prueba de agarre de gema
-
-      //Backgroud music
+    
+      //backgroud music
 
       this.sound.play('bgMusic', {
         loop: true,
@@ -166,7 +144,7 @@ export class GameScene extends Phaser.Scene {
        
     }
 
-    // Retorna una gema random en X e Y posicion
+    //retorna una gema random en X e Y posicion
     private randomGem(row: any, col: any) : number {
 
         const gemType = Phaser.Math.Between(0, this.gemTypes.length - 1);
@@ -188,7 +166,7 @@ export class GameScene extends Phaser.Scene {
 
     }
 
-    // Crea el tablero
+    //crea el tablero
     private createBoard(): void {
       for (let row = 0; row < this.rows; row++) {
         this.grid[row] = [];
@@ -236,18 +214,18 @@ export class GameScene extends Phaser.Scene {
             ) as Phaser.GameObjects.Image;
 
           if (otherGem) {
-            // swap en grid
+            //swap en grid
             const tempType = this.grid[row][col];
             this.grid[row][col] = this.grid[this.selectedRow][this.selectedCol];
             this.grid[this.selectedRow][this.selectedCol] = tempType;
 
-            // actualizar datos de row/col en sprites
+            //actualizar datos de row/col en sprites
             otherGem.setData("row", this.selectedRow);
             otherGem.setData("col", this.selectedCol);
             gem.setData("row", row);
             gem.setData("col", col);
 
-          // animacion del swap
+          //animacion del swap
           this.tweens.add({
             targets: otherGem,
             x: this.boardOffsetX + this.selectedCol * this.gemSize + this.gemSize / 2,
@@ -262,19 +240,19 @@ export class GameScene extends Phaser.Scene {
             duration: 200,
           });
 
-          // Verificar si realmente hay match despues del swap
+          // verificar si realmente hay match despues del swap
           if (!this.findMatches()) {
-            // Si no hay match, revertir en grid
+            //si no hay match, revertir en grid
             this.grid[this.selectedRow][this.selectedCol] = this.grid[row][col];
             this.grid[row][col] = tempType;
 
-            // Revertir row/col en sprites
+            //revertir row/col en sprites
             otherGem.setData("row", row);
             otherGem.setData("col", col);
             gem.setData("row", this.selectedRow);
             gem.setData("col", this.selectedCol);
 
-            // Animacion de vuelta
+            //animacion de vuelta
             this.tweens.add({
               targets: otherGem,
               x: this.boardOffsetX + col * this.gemSize + this.gemSize / 2,
@@ -292,7 +270,7 @@ export class GameScene extends Phaser.Scene {
         }
       }
       else {
-    // volver a posicion original
+    //volver a posicion original
         this.tweens.add({
           targets: gem,
           x: this.boardOffsetX + this.selectedCol * this.gemSize + this.gemSize / 2,
@@ -311,7 +289,7 @@ export class GameScene extends Phaser.Scene {
   private findMatches(): boolean {
     let found = false;
 
-    // Inicializar matched con la misma dimensión que grid
+    //inicializar matched con la misma dimensión que grid
     this.matched = [];
     for (let row = 0; row < this.rows; row++) {
         this.matched[row] = [];
@@ -320,7 +298,7 @@ export class GameScene extends Phaser.Scene {
         }
     }
 
-    //  Buscar matches horizontales
+    //buscar matches horizontales
     for (let row = 0; row < this.rows; row++) {
         for (let col = 0; col < this.cols - 2; col++) {
             const t = this.grid[row][col];
@@ -340,7 +318,7 @@ export class GameScene extends Phaser.Scene {
         }
     }
 
-    //  Buscar matches verticales
+    //buscar matches verticales
     for (let col = 0; col < this.cols; col++) {
         for (let row = 0; row < this.rows - 2; row++) {
             const t = this.grid[row][col];
@@ -365,34 +343,18 @@ export class GameScene extends Phaser.Scene {
     
     return found;
 }
-/*
-    private resolveMatches() : void {
-        for (let x = 0; x < this.cols; x++) {
-            let write_y = this.cols - 1;
-            for (let y = this.cols; y < this.rows - 1; y-1) {
-                if(!this.matched[y][x]){
-                    this.grid[write_y][x] = this.grid[y][x];
-                    write_y--;
-                };
-            };
-            while(write_y >= 0) {
-                this.grid[write_y][x] = this.randomGem(x,y)
-                write_y--;
-            };
-        }
-    }
-*/
 
-    private resolveMatches(): void {
-      for (let col = 0; col < this.cols; col++) {
-        let writeRow = this.rows - 1; // desde abajo
 
-        for (let row = this.rows - 1; row >= 0; row--) {
-          if (!this.matched[row][col]) {
-          // mover gema hacia abajo en la grilla
+  private resolveMatches(): void {
+    for (let col = 0; col < this.cols; col++) {
+      let writeRow = this.rows - 1; // desde abajo
+
+      for (let row = this.rows - 1; row >= 0; row--) {
+        if (!this.matched[row][col]) {
+        //mover gema hacia abajo en la grilla
           this.grid[writeRow][col] = this.grid[row][col];
 
-          // mover el sprite tambien
+          //mover el sprite tambien
           const gem = this.children.getChildren().find(
             (child: any) =>
               child.getData &&
@@ -412,7 +374,7 @@ export class GameScene extends Phaser.Scene {
         writeRow--;
       } 
           else {
-            // si estaba matcheada, se destruye el sprite
+            //si estaba matcheada, se destruye el sprite
             const gem = this.children.getChildren().find(
               (child: any) =>
                 child.getData &&
@@ -422,9 +384,9 @@ export class GameScene extends Phaser.Scene {
 
           if (gem) gem.destroy();
           }
-      }
+    }
 
-    // rellenar nuevas gemas arriba
+    //rellenar nuevas gemas arriba
     for (let newRow = writeRow; newRow >= 0; newRow--) {
       const gemType = this.randomGem(newRow, col);
       this.grid[newRow][col] = gemType;
