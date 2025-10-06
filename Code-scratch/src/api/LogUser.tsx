@@ -1,6 +1,6 @@
 import type { User } from "../model/User";
 import type { UserLogin } from "../model/UserLogin";
-import { userApi } from "./apiBase/userApi";
+import { userApi } from "./apiBase/UserApi";
 
 
 const LogUser = async(usuario : UserLogin) => {
@@ -9,6 +9,7 @@ const LogUser = async(usuario : UserLogin) => {
     console.log(response);
 
     const usuarioBack: User = {
+        id: response.data.user.id,
         email: response.data.user.email,
         username: response.data.user.username,
         score: response.data.user.score

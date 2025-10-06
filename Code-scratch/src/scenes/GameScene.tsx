@@ -2,9 +2,10 @@ import Phaser from "phaser";
 
 export class GameScene extends Phaser.Scene {
 
+    private idUser: string = '' // idUsuario
     private pb: number = 0; // puntos maximos del jugador
     private points: number = 0; // puntos actuales del jugador
-    private hp: number = 2000;   // vida del enemigo
+    private hp: number = 0;   // vida del enemigo
 
     private grid: number[][] = []; // matriz del tablero
     private rows: number = 8;   // cantidad de filas
@@ -27,14 +28,17 @@ export class GameScene extends Phaser.Scene {
         super('GameScene');
     }
 
-    init(data: { score: number }) {
+    init(data: { score: number, idUser: string}) {
         this.pb = data.score;
         console.log(data.score + "desde GameScene.tsx");
+
+        this.idUser = data.idUser;
         
         this.points = 0;
 
+        this.hp = 200;
     
-    }
+    };
 
     preload() : void {
         this.load.image('gameBackground', 'assets/gameBackground.png');
@@ -141,10 +145,41 @@ export class GameScene extends Phaser.Scene {
       })
         
     
+      //timer
+
+      this.timerText = this.add.text(this.scale.width -80, 10 , `30`, {
+            fontSize: '60px',
+            color: '#433D8C',
+            stroke: '#ffffff',
+            strokeThickness: 6
+        })
+
+      this.gameIsOver = false;
+      this.timedEvent = this.time.delayedCall(100 * 100, this.handleGameOver, [], this);
        
     }
 
-    //retorna una gema random en X e Y posicion
+
+    update(): void {
+      if(this.gameIsOver){
+        return;
+      }
+
+      if(this.hp <= 0){
+        this.handleGameOver();
+      }
+
+      this.timerText.setText(Math.round(this.timedEvent.getRemainingSeconds()).toString(10));
+
+
+
+      if(this.findMatches()) {
+          this.resolveMatches()
+        }
+    
+    }
+
+        //retorna una gema random en X e Y posicion
     private randomGem(row: any, col: any) : number {
 
         const gemType = Phaser.Math.Between(0, this.gemTypes.length - 1);
@@ -394,10 +429,11 @@ export class GameScene extends Phaser.Scene {
   }
 }
 
-    update(): void {
-        if(this.findMatches()) {
-            this.resolveMatches()
-        }
-    
-    }
+handleGameOver() {
+  console.log("TERMINO EL JUEGO PUTO");
+  this.gameIsOver = true;
+  this.scene.start('GameOver', {score: this.points, pb: this.pb, idUser: this.idUser, hp: this.hp});
+  
+};
+
 }

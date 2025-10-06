@@ -13,6 +13,7 @@ export const Navbar = () => {
             await auth.signOut();
 
             const userLogout: User = {
+                id: '',
                 email:'',
                 username:'',
                 score:0

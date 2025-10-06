@@ -1,9 +1,9 @@
 import { useContext, useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 import { UserContext } from '../context/UserContext';
-import getUser from '../api/GetUser';
 import { Lobby } from '../scenes/Lobby';
 import { GameScene } from '../scenes/GameScene';
+import { GameOver} from'../scenes/GameOver';
 
 const Game = () => {
   const gameRef = useRef<HTMLDivElement>(null);
@@ -27,7 +27,8 @@ const Game = () => {
       },
       scene: [
         Lobby,
-        GameScene
+        GameScene,
+        GameOver
       ],
       scale: {
         mode: Phaser.Scale.FIT,
@@ -36,12 +37,15 @@ const Game = () => {
     };
 
     const game = new Phaser.Game(config);
-    game.scene.start("Lobby", { score: user?.score || 0 });
+    game.scene.start("Lobby", { score: user.score, idUser: user.id});
+    console.log("id de usuario desde Game.tsx" + "" + user.id);
+    
 
     return () => {
       game.destroy(true); 
     };
-  }, [user]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return <div ref={gameRef} style={{ width: '100%', height: '100vh' }} />;
 };

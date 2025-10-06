@@ -16,6 +16,9 @@ export const Home = () => {
         navigate('/game');
     };
 
+    console.log(user.id + "" + "id del user desde el home");
+    
+
     return (
         <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
                 <div className="d-flex gap-4">
