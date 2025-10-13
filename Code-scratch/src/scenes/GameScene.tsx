@@ -36,7 +36,7 @@ export class GameScene extends Phaser.Scene {
         
         this.points = 0;
 
-        this.hp = 200;
+        this.hp = 2000;
     
     };
 
@@ -96,44 +96,42 @@ export class GameScene extends Phaser.Scene {
         })
 
 
-        //display para el enemigo
-      /*
-      this.add.image(320, 350, 'rexona').setDisplaySize(128,256);
-        */
-      const hpPrefix = this.add.text(270, 500, 'HP:', {
+        //display vida del enemigo
+
+        const hpPrefix = this.add.text(270, 500, 'HP:', {
           fontSize: '25px',
           color: '#433D8C',
           stroke: '#ffffff',
           strokeThickness: 6
         });
 
-      this.hpText = this.add.text(hpPrefix.x + hpPrefix.width, 500 , `${this.hp}`, {
-        fontSize: '25px',
-        color: '#433D8C',
-        stroke: '#ffffff',
-        strokeThickness: 6
-      });
+        this.hpText = this.add.text(hpPrefix.x + hpPrefix.width, 500 , `${this.hp}`, {
+          fontSize: '25px',
+          color: '#433D8C',
+          stroke: '#ffffff',
+          strokeThickness: 6
+        });
         
 
-      const video = this.add.video(320, 350, 'enemigoVideo');
+        const video = this.add.video(320, 350, 'enemigoVideo');
 
-      video.setDisplaySize(320,350);
-      video.play(true);
+        video.setDisplaySize(320,350);
+        video.play(true);
 
 
         
 
       //crear el tablero
-      const graphics = this.add.graphics();
-        graphics.lineStyle(4, 0xffffff, 1);
-        graphics.strokeRect(
-        this.boardOffsetX,
-        this.boardOffsetY,
-        this.cols * this.gemSize,
-        this.rows * this.gemSize
-        );
+        const graphics = this.add.graphics();
+          graphics.lineStyle(4, 0xffffff, 1);
+          graphics.strokeRect(
+          this.boardOffsetX,
+          this.boardOffsetY,
+          this.cols * this.gemSize,
+          this.rows * this.gemSize
+          );
 
-        this.createBoard();
+          this.createBoard();
 
 
     
@@ -155,7 +153,7 @@ export class GameScene extends Phaser.Scene {
         })
 
       this.gameIsOver = false;
-      this.timedEvent = this.time.delayedCall(100 * 100, this.handleGameOver, [], this);
+      this.timedEvent = this.time.delayedCall(300 * 100, this.handleGameOver, [], this);
        
     }
 
@@ -430,7 +428,6 @@ export class GameScene extends Phaser.Scene {
 }
 
 handleGameOver() {
-  console.log("TERMINO EL JUEGO PUTO");
   this.gameIsOver = true;
   this.scene.start('GameOver', {score: this.points, pb: this.pb, idUser: this.idUser, hp: this.hp});
   

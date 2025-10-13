@@ -6,7 +6,7 @@ export const ProtectedRouter = () => {
   const { user } = useContext(UserContext);
 
   if (user.email === '') {
-    return <Navigate to='/login' />;
+    return <Navigate to='/' />;
   }
 
   return <Outlet />;
