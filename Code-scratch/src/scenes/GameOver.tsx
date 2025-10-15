@@ -109,19 +109,7 @@ export class GameOver extends Phaser.Scene {
     update(){
 
 }; 
-/*
-    private updatePb(){
-        (async () => {
-            try {
-                await UpdatePb(this.score, this.idUser);
-                console.log("PB actualizado en backend");
-            } 
-            catch (err) {
-                console.error("Error actualizando PB", err);
-            }
-        })();
-    }
-*/
+
 };
 
 
