@@ -34,7 +34,7 @@ export class GameScene extends Phaser.Scene {
         this.pb = data.score;
         this.idUser = data.idUser;
         this.points = 0;
-        this.hp = 20000;
+        this.hp = 15000;
         this.matched = [];
         this.isResolving = false;
         this.gameIsOver = false;
@@ -51,14 +51,8 @@ export class GameScene extends Phaser.Scene {
         this.load.image('diamanteVerde', 'assets/diamanteVerde.png');
         this.load.image('diamanteAzul', 'assets/diamanteAzul.png');
 
-        this.load.image('rexona', 'assets/desodorante.png')
-
-        this.load.spritesheet('enemigoCat', 'assets/enemigoCat.png', {
-          frameWidth: 70,
-          frameHeight: 69
-        });
-
         this.load.video('enemigoVideo', 'assets/cat-spinning.mp4');
+        this.load.video('explosion' ,'assets/explosion.mp4')
 
         this.load.audio('bgMusic', 'assets/funkytown.mp3')
 
@@ -157,7 +151,7 @@ export class GameScene extends Phaser.Scene {
         })
 
       this.gameIsOver = false;
-      this.timedEvent = this.time.delayedCall(300 * 100, this.handleGameOver, [], this);
+      this.timedEvent = this.time.delayedCall(900 * 100, this.handleGameOver, [], this);
        
     }
 
@@ -506,11 +500,44 @@ export class GameScene extends Phaser.Scene {
         ) as Phaser.GameObjects.Image || null;
     }
 
-
+/*
     handleGameOver() {
       this.gameIsOver = true;
       this.scene.start('GameOver', {score: this.points, pb: this.pb, idUser: this.idUser, hp: this.hp});
 
     };
+
+  */    
+    handleGameOver() {
+      if (this.gameIsOver) return; //evita dobles ejecuciones
+        this.gameIsOver = true;
+
+
+      if (this.hp <= 0) {
+        const explosionX = this.scale.width / 2;
+        const explosionY = this.scale.height / 2;
+        const explosion = this.add.video(explosionX, explosionY, 'explosion');
+        explosion.setDisplaySize(400, 400);
+        explosion.setDepth(9999);
+        explosion.play(true);
+
+        //cuando el video termina correctamente
+        explosion.once('complete', () => {
+          this.scene.start('GameOver', {score: this.points, pb: this.pb, idUser: this.idUser,hp: this.hp});
+        });
+
+        //por si no funciona
+        this.time.delayedCall(4000, () => {
+          if (this.scene.isActive('GameScene')) {
+            this.scene.start('GameOver', {score: this.points, pb: this.pb, idUser: this.idUser,hp: this.hp});
+          }
+        });
+      } 
+      else {
+        //termina por tiempo
+        this.cameras.main.fadeOut(1000, 0, 0, 0);
+        this.time.delayedCall(1000, () => this.scene.start('GameOver', {score: this.points, pb: this.pb, idUser: this.idUser,hp: this.hp}));
+      }
+    }
 
 }
