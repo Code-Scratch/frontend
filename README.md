@@ -1,6 +1,7 @@
 # 🎮 Frontend — Code Scratch
 
 Este repositorio contiene el **frontend** de la aplicación, donde se encuentra toda la **lógica del juego** junto con otros componentes visuales e interactivos del proyecto.
+El frontend esta construido usando como lenguaje principal TypeScript, y con las bibliotecas de React y Phaser, donde la ultima es la proveedora y encargada del juego en si.
 
 ---
 
@@ -41,6 +42,18 @@ npm run dev
 Para que el ciclo completo de la aplicación funcione correctamente, también se debe tener levantado el backend del proyecto, el cual esta en esta misma organizacion (apartado de repositorios) llamado "backend".
 
 Una vez ejecutado el juego, dentro del mismo hay una explicacion de las reglas y como jugar, gracias por leer!
+
+🧩 Tecnologías usadas:
+
+⚛️ React
+
+🧠 TypeScript
+
+⚡ Vite
+
+🧰 npm
+
+🧩 Phaser 3
 
 
 
