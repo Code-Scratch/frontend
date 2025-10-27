@@ -7,9 +7,7 @@ import { GameOver} from'../scenes/GameOver';
 
 const Game = () => {
   const gameRef = useRef<HTMLDivElement>(null);
-  const { user } = useContext(UserContext);
-  console.log(user.score + "desde Game.tsx");
-  
+  const { user } = useContext(UserContext);  
 
 
   useEffect(() => {
@@ -37,9 +35,7 @@ const Game = () => {
     };
 
     const game = new Phaser.Game(config);
-    game.scene.start("Lobby", { score: user.score, idUser: user.id});
-    console.log("id de usuario desde Game.tsx" + "" + user.id);
-    
+    game.scene.start("Lobby", { score: user.score, idUser: user.id});    
 
     return () => {
       game.destroy(true); 

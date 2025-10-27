@@ -26,21 +26,14 @@ export const Login = () => {
             const logUser = await LogUser(usuario);
 
             setUser(logUser);
-            navigate('/');
-
-
-            console.log(logUser);
-    
+            navigate('/');    
         }
         catch(error) {
             console.log(error);
-            
         }
-        
     };
 
     useEffect(() => {
-        
     }, [])
 
     return (

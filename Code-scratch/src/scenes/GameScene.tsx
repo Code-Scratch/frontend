@@ -405,11 +405,7 @@ export class GameScene extends Phaser.Scene {
                 found = true;
             }
         }
-      }
-      console.log(found);
-      console.log(this.points);
-    
-    
+      }    
       return found;
     }
 
@@ -500,14 +496,7 @@ export class GameScene extends Phaser.Scene {
         ) as Phaser.GameObjects.Image || null;
     }
 
-/*
-    handleGameOver() {
-      this.gameIsOver = true;
-      this.scene.start('GameOver', {score: this.points, pb: this.pb, idUser: this.idUser, hp: this.hp});
-
-    };
-
-  */    
+  
     handleGameOver() {
       if (this.gameIsOver) return; //evita dobles ejecuciones
         this.gameIsOver = true;

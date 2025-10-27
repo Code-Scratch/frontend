@@ -48,7 +48,6 @@ export class GameOver extends Phaser.Scene {
                 try {
                     await UpdatePb(this.score, this.idUser);
                     this.pb = this.score;
-                    console.log("PB actualizado en backend");
                 } 
                 catch (err) {
                     console.error("Error actualizando PB", err);

@@ -10,7 +10,6 @@ export const UserContextProvider:React.FC<React.PropsWithChildren> = ({children}
         setCtxUser(user)
     };
 
-    // No me convence aun, me reinicia la escena, tengo que hacer que a la hora de actualizar el PB, se quede en GameOver, y no vaya al Lobby
     useEffect(() => {
     registerSetUser(setCtxUser);
   }, []);
