@@ -3,13 +3,15 @@ import Phaser from "phaser";
 export class Lobby extends Phaser.Scene {
 
     private score: number = 0;
+    private idUsuario: string = "";
 
     constructor(){
         super('Lobby');
     }
 
-    init(data: { score: number }): void {
+    init(data: { score: number, idUser: string }): void {
         this.score = data.score;
+        this.idUsuario = data.idUser;
     }
 
 
@@ -35,7 +37,7 @@ export class Lobby extends Phaser.Scene {
         this.input.once('pointerdown', () => {
             this.cameras.main.fadeOut(500);
             this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-                this.scene.start('GameScene', {score: this.score});  
+                this.scene.start('GameScene', {score: this.score, idUser: this.idUsuario});  
             })
         })
 

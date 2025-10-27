@@ -13,6 +13,7 @@ export const Navbar = () => {
             await auth.signOut();
 
             const userLogout: User = {
+                id: '',
                 email:'',
                 username:'',
                 score:0
@@ -28,9 +29,6 @@ export const Navbar = () => {
 
     };
 
-    const handlerGoHome = () =>{
-        navigate('/')
-    }
 
 
 
@@ -38,22 +36,33 @@ export const Navbar = () => {
     return (
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                 <Link className="navbar-brand" to="/">Code-Scratch</Link>
-                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-                         data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"
-                         onClick={handlerGoHome}>
+                <Link class="navbar-brand"  href="" to="/">Code-Scratch</Link>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                {user.email !=='' ?  <button type="button" class="btn btn-primary btn-sm" onClick={handlerLogout}> Logout </button> : <> </>}
-                {user.email !=='' ?
-                  <div>
-                    <h4>{user.username}</h4>
-                  </div>: <> </>}
-                
-                  
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <Link class="nav-link active" aria-current="page" href="" to="/">Home</Link>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Sobre el juego</a>
+                            {/*<Link class="nav-link active" aria-current="page" href="" to="/about">Sobre el juego</Link> */}
+                        </li>
+                        {user.email !=='' ? 
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {user.username}
+                            </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="" onClick={handlerLogout}>LogOut</a></li>
+                                </ul>
+                        </li> 
+                        : null}
+                      
+                    </ul>
+                </div>
             </div>
-            
-            
         </nav>
     );
 };

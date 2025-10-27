@@ -26,25 +26,18 @@ export const Login = () => {
             const logUser = await LogUser(usuario);
 
             setUser(logUser);
-            navigate('/');
-
-
-            console.log(logUser);
-    
+            navigate('/');    
         }
         catch(error) {
             console.log(error);
-            
         }
-        
     };
 
     useEffect(() => {
-        
     }, [])
 
     return (
-            <div className="d-flex justify-content-center align-items-center vh-100">
+            <div className="d-flex justify-content-center align-items-center vh-50">
                 <div className="text-center">
                      <FcGoogle size={32} style={{ marginRight: "8px" }} />
                         <button type="button"className="btn btn-primary btn-lg" onClick={handlerButtonGoogle}>
