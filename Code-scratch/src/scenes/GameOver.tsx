@@ -44,6 +44,8 @@ export class GameOver extends Phaser.Scene {
         }).setOrigin(0.5);
         
         if (this.score > this.pb) {
+            console.log("Este es el pb del usuario en gameOver:" + "" + this.pb + "" + "y este el puntaje original:" + "" + this.score);
+            
             (async () => {
                 try {
                     await UpdatePb(this.score, this.idUser);

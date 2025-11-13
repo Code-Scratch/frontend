@@ -29,12 +29,8 @@ export const Navbar = () => {
 
     };
 
-
-
-
-
     return (
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
                 <Link class="navbar-brand"  href="" to="/">Code-Scratch</Link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,10 +40,6 @@ export const Navbar = () => {
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <Link class="nav-link active" aria-current="page" href="" to="/">Home</Link>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Sobre el juego</a>
-                            {/*<Link class="nav-link active" aria-current="page" href="" to="/about">Sobre el juego</Link> */}
                         </li>
                         {user.email !=='' ? 
                         <li class="nav-item dropdown">

@@ -151,7 +151,8 @@ export class GameScene extends Phaser.Scene {
         })
 
       this.gameIsOver = false;
-      this.timedEvent = this.time.delayedCall(900 * 100, this.handleGameOver, [], this);
+      //tiempo de juego (900 * 100)
+      this.timedEvent = this.time.delayedCall(90 * 100, this.handleGameOver, [], this);
        
     }
 
